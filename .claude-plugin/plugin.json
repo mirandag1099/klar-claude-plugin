@@ -1,0 +1,23 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "klar",
+  "displayName": "Klar Portfolio Analytics",
+  "version": "0.2.0",
+  "description": "Portfolio analytics in Claude: upload a brokerage CSV and get performance vs SPY, risk metrics, Fama-French factor exposure, goal scoring and Monte Carlo projections, with an inline dashboard and an analyst playbook.",
+  "author": {
+    "name": "Klar Analytics",
+    "url": "https://klaranalytics.com"
+  },
+  "homepage": "https://klaranalytics.com",
+  "repository": "https://github.com/mirandag1099/klar-claude-plugin",
+  "keywords": [
+    "portfolio",
+    "investing",
+    "fama-french",
+    "factor-analysis",
+    "monte-carlo",
+    "retirement",
+    "risk"
+  ],
+  "license": "MIT"
+}

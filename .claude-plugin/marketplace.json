@@ -1,0 +1,23 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "klar-analytics",
+  "description": "Klar Analytics plugins for Claude: portfolio performance, risk, factor and goal analysis.",
+  "owner": {
+    "name": "Klar Analytics",
+    "url": "https://klaranalytics.com"
+  },
+  "plugins": [
+    {
+      "name": "klar",
+      "source": "./",
+      "description": "Portfolio analytics from a brokerage CSV: performance vs SPY, risk, Fama-French factors, goal score and Monte Carlo, with an inline dashboard.",
+      "category": "finance",
+      "tags": [
+        "portfolio",
+        "investing",
+        "factors",
+        "retirement"
+      ]
+    }
+  ]
+}
