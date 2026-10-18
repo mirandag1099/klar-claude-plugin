@@ -17,6 +17,24 @@ For definitions and thresholds for every metric, read
 [references/metrics.md](references/metrics.md) before your first interpretation
 in a conversation.
 
+## If the Klar tools aren't available
+
+If `load_portfolio` and the other Klar tools aren't in your tool list, the Klar
+connector isn't connected in this chat. **Don't analyze the portfolio yourself**:
+no returns, volatility, Sharpe, drawdown, beta or factor estimates from memory or
+general knowledge, and no generic portfolio review in place of the analysis.
+Reply briefly instead:
+
+> Klar's analysis tools aren't connected in this chat yet. To turn them on, open
+> **Customize → Connectors**, select **Klar**, and click **Connect** (no account
+> needed). If Klar already shows as connected, switch it on in this chat's tools
+> menu (**+**). Then start a new chat and attach your file again.
+
+You can still answer general questions that need no numbers (what a Sharpe ratio
+means, how factor models work) and say that a full analysis needs the connector.
+If a Klar tool call fails because the server didn't respond, say so and suggest
+trying again in a minute; don't fill the gap with estimates.
+
 ## Tools
 
 | Tool | Use it for |

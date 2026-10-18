@@ -15,7 +15,7 @@ The dashboard has controls for the period, the factor model and the time horizon
 
 ## Install
 
-**Claude (web, desktop and mobile):** open **Customize → Plugins**, search for **Klar**, and click **Add**.
+**Claude (web, desktop and mobile):** open **Customize → Plugins**, search for **Klar**, and click **Add**. If Claude then asks you to connect Klar, click **Connect** once. There's no account or sign-in.
 
 **Claude Code:**
 
@@ -24,7 +24,7 @@ The dashboard has controls for the period, the factor model and the time horizon
 /plugin install klar@klar-analytics
 ```
 
-Then start a new conversation, attach your positions CSV, and say "analyze my portfolio." No account, API key or setup is needed.
+Then start a new conversation, attach your positions CSV, and say "analyze my portfolio." No account or API key is needed.
 
 ## What's in this plugin
 
