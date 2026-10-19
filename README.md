@@ -6,7 +6,7 @@ Klar turns Claude into a portfolio analyst. Attach a positions export from your 
 
 ## What you can ask
 
-- **"Analyze my portfolio."** Returns versus the S&P 500 (1 month to 10 years), annual growth rate, volatility, worst drawdown, Sharpe and Sortino ratios, beta, which holdings drove returns and risk, correlations, and calendar-year and monthly returns.
+- **"Analyze my portfolio."** Returns versus the S&P 500 (1 month to 10 years), annual growth rate, volatility, worst drawdown, Sharpe and Sortino ratios, beta, which holdings drove returns and risk, correlations, calendar-year and monthly returns, and a risk/return map against the efficient frontier and major benchmarks.
 - **"What's really driving my returns?"** Fama-French factor analysis (CAPM, 3-factor, Carhart 4-factor, 5-factor): how much of your return comes from the market, company size, value, profitability, investment style and momentum, and whether any "alpha" is statistically meaningful.
 - **"Am I on track to retire with $1M in 25 years?"** A 0–100 goal score covering required return, risk fit, diversification, drawdown resilience and the probability of reaching your target.
 - **"What could my portfolio be worth in 20 years?"** Monte Carlo simulations with good, typical and bad-case outcomes, contributions and withdrawals.

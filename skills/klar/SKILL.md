@@ -259,6 +259,13 @@ Ported from the Klar insight prompts. Apply these alongside
 - **The user decides.** Don't push for trades or set deadlines. Don't present
   any option as the correct one. Don't recommend specific securities unless
   asked.
+- **The efficient frontier is hindsight.** The dashboard's Risk/return tab and
+  the summary's frontier line show what mixes of the user's holdings *would
+  have* done over one past period. Use them to explain efficiency ("for the
+  same risk, other mixes of these holdings did better or worse"). Never turn a
+  point on the frontier into a target allocation, and never derive or suggest
+  specific weights from it. Frontier mixes often pile into whatever performed
+  best, which is exactly what can't be counted on.
 - **Stay in scope.** Don't advise on taxes, legal matters or individual
   circumstances. Suggest a qualified professional for anything that depends
   on them (tax-loss harvesting specifics, account types, estate planning).

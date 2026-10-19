@@ -153,6 +153,24 @@ rest of the portfolio.
 concentration. Point out holdings whose risk share is much larger than their
 weight.
 
+### Efficient frontier and the risk/return map
+
+**What it is:** the curve of the best average yearly return each level of
+volatility could have had over the analysis period, mixing only the user's
+current holdings. The map plots the portfolio, each holding and benchmarks
+(SPY, QQQ, AGG, ACWI, a 60/40 mix) on the same axes. Returns here are
+*average* yearly returns, a bit higher than CAGR for volatile assets, so don't
+mix them with the CAGR figures elsewhere in the summary.
+
+**How to read it:**
+- The vertical gap between the portfolio and the curve at the same risk shows
+  how much return the same holdings could have added in hindsight. A small gap
+  means the mix was already close to efficient for its risk.
+- Points to the right are riskier, points higher earned more. A benchmark above
+  and to the left of the portfolio did better for less risk over this period.
+- It's backward-looking and favors whatever did best. Describe it; never use
+  it to propose weights.
+
 ## Factor analysis (Fama-French)
 
 The regression explains the portfolio's excess return (return minus the T-bill
