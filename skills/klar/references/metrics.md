@@ -314,5 +314,5 @@ inflation each year. Withdrawals are taken as a percentage of the balance.
   matters only with withdrawals. Anything above about 5-10% at a given
   withdrawal rate is worth pointing out.
 - **Sensitivity:** to show what changes the odds (contribution, horizon,
-  withdrawal rate or allocation), rerun the tool with the changed input. Don't
-  extrapolate.
+  withdrawal rate or allocation), offer to rerun the tool with the changed
+  input, and rerun it when the user asks. Don't extrapolate.
