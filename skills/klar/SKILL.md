@@ -227,7 +227,11 @@ Ported from the Klar insight prompts. Apply these alongside
 - **Correlation:** high average correlation means diversification is weaker
   than the holding count suggests. Name the pairs that are highly correlated.
 - **Drawdown:** give the worst decline, when it happened, how it compares to
-  SPY, and whether it has recovered.
+  SPY, and whether it has recovered, all from the summary's "Worst drawdown"
+  section. If the portfolio fell less than SPY, credit the mix for cushioning
+  it. A holding that fell less than stocks helped, even if it fell; never say it
+  "didn't protect" when the portfolio's drawdown was smaller than SPY's (see
+  the drawdown rules in [references/metrics.md](references/metrics.md)).
 - **Rolling metrics** (volatility, Sharpe, beta): describe the trend (rising,
   falling or stable) and point out regime changes.
 - **Factor exposure:** state each tilt in plain words (large vs small, value

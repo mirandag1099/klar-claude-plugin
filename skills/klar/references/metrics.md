@@ -126,6 +126,27 @@ to $66,000. Compare it to SPY's drawdown in the same window. Also note the
 recovery: a -50% loss needs a +100% gain to break even. The question to ask is
 whether the user could have held through it without selling.
 
+**Use the "Worst drawdown" section, not guesses.** It gives the peak and low
+dates, whether and when the portfolio recovered, SPY's move over the same
+stretch, and each holding's move. Quote those facts.
+
+**Judging whether a holding helped (be precise):**
+- If the portfolio fell less than SPY over the stretch, the mix **cushioned**
+  the drop. Say so, with the gap in points.
+- A holding that fell, but **less than stocks**, still helped: "BND fell 17%
+  while stocks fell 25%, so it softened the loss." Never say it "didn't
+  protect" or "failed when it mattered" in that case.
+- Only a holding that rose or held flat was a true **hedge** (offset losses).
+  Bonds falling alongside stocks, as in 2022 when rates rose, is worth noting
+  as "it fell too, but less," not as a failure.
+- Say a holding didn't help only if it fell as much as or more than stocks over
+  that stretch.
+
+**Price-only caveat:** figures exclude dividends and bond interest, so bond and
+dividend funds' drawdowns look deeper than investors experienced (BND's 2022
+decline was about -23% in price, about -18% including interest). Mention it
+when bond or income funds matter to the conclusion.
+
 ### Correlation
 
 **What it is:** how closely two holdings move together, from -1 (opposite) to
@@ -140,8 +161,11 @@ whether the user could have held through it without selling.
 | 0.3-0.7 | Moderate |
 | Below 0.3 | Real diversification, such as stocks vs Treasuries |
 
-Correlations rise in crashes, so diversification is weakest when it matters
-most. Name the specific highly correlated pairs.
+Correlations measured over a whole period can change in sell-offs; some pairs
+move together more in a crash. Don't assert that from the correlation number
+alone: check the summary's "Worst drawdown" section, which shows what each
+holding actually did in the portfolio's worst stretch. Name the specific
+highly correlated pairs.
 
 ### Risk contributions
 
