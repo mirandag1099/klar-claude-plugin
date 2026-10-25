@@ -86,10 +86,11 @@ these bands.
 
 **What it is:** return above the risk-free rate per unit of total volatility.
 It measures how much return you got for the swings you lived through. Klar
-uses the 10-year Treasury yield as the risk-free rate, or 2% if that isn't
-available.
+uses the 3-month T-bill return actually earned over the analysis window as the
+risk-free rate (the summary prints it). If that data is unavailable, it uses
+today's 3-month T-bill yield, or 2%.
 
-**How to read it:** below 0 means the portfolio did worse than Treasuries,
+**How to read it:** below 0 means the portfolio did worse than cash (T-bills),
 0-0.5 is weak, 0.5-1 is decent, and above 1 is strong over a multi-year
 period. Always compare to SPY's Sharpe over the same window. Sharpe depends a
 lot on the period, because bull markets inflate it.
@@ -279,8 +280,8 @@ weights are rescaled.
 
 | Dimension | Weight | What it measures |
 |---|---|---|
-| `return_adequacy` | 25 | Historical CAGR vs the CAGR needed to reach the target from `initial_value` over the horizon (the required rate is lowered when contributions are counted). 100 if the historical rate is at least 1.2× the required rate. 80-100 if it is at least 1×. 30-80 if it is at least 0.5×. Below 30 otherwise. |
-| `goal_probability` | 25 | The Monte Carlo probability of reaching the target, mapped directly (68% = 68). |
+| `return_adequacy` | 25 | Historical CAGR vs the CAGR needed to reach the target from `initial_value` over the horizon, with monthly contributions growing 2.5% a year with inflation (the same assumptions as the simulation). 100 if the historical rate is at least 1.2× the required rate. 80-100 if it is at least 1×. 30-80 if it is at least 0.5×. Below 30 otherwise. |
+| `goal_probability` | 25 | The Monte Carlo probability of reaching the target, mapped directly (68% = 68). Shown as ">99%" or "<1%" at the extremes; never present a simulation as certain. |
 | `risk_alignment` | 20 | Portfolio volatility vs the risk-tolerance band in the volatility table above. Highest inside the band, lower the further outside it. |
 | `diversification` | 20 | The average of three sub-scores (see below). |
 | `drawdown_resilience` | 10 | Max drawdown vs a tolerance that grows with the horizon: `min(50%, 5% + 1.5% × years)`. A 20-year horizon tolerates 35%. |
@@ -317,12 +318,24 @@ Likely (above 80), Likely (above 60), Uncertain (above 40), Unlikely (above
 The score depends entirely on the inputs. Changing the horizon or contribution
 can move it a lot, so offer to rerun it with different inputs.
 
+**Target dollars:** `target_amount` is in dollars at the horizon (nominal). The
+summary also states what the target buys in today's dollars at 2.5% inflation
+(e.g. $2M in 30 years ≈ $953k today). If the user meant today's dollars, say so
+and offer to rerun with the inflated target (today's amount × 1.025^years).
+
+**Historical returns as expectations:** both `return_adequacy` and
+`goal_probability` assume the future resembles the analysis window. After an
+exceptional decade (for example one holding with a huge run), say plainly that
+the score leans on that history.
+
 ## Monte Carlo (`simulate_future`)
 
 **Method:** Klar simulates thousands of possible futures. Each one draws random
-daily returns with the portfolio's historical average return and volatility,
-applied month by month. Contributions are added monthly and grow with
-inflation each year. Withdrawals are taken as a percentage of the balance.
+daily returns from a normal distribution with the portfolio's historical
+average return and volatility over the analysis window (10 years by default),
+applied month by month. It does not resample actual historical days.
+Contributions are added monthly and grow with inflation each year. Withdrawals
+are taken as a percentage of the balance.
 
 **Limits to mention when they matter:**
 
@@ -336,20 +349,22 @@ inflation each year. Withdrawals are taken as a percentage of the balance.
 
 **How to read the outputs:**
 
-- **Percentiles (p5, p10, p25, p50, p75, p90, p95):**
+- **Percentiles (p5, p25, p50, p75, p95):**
   - p50 (the median) is the middle outcome: half the paths ended above it and
     half below.
-  - p10 is a weak-but-plausible case: 1 in 10 paths did worse.
-  - p90 is a strong case.
-  - Present the range (the p10-p90 band), never just the median, and never the
-    mean, which large winners pull upward.
+  - p25-p75 is the typical range: half of all paths ended inside it.
+  - p5 is a bad-but-plausible case (1 in 20 paths did worse); p95 is a strong
+    case.
+  - Present a range (p25-p75 for typical, p5-p95 for the full spread), never
+    just the median, and never the mean, which large winners pull upward.
 - **Fan chart:** shows the percentile paths spreading out over time. The
   widening band shows uncertainty growing with the horizon.
 - **Probability of reaching the target (`probability_above_target`, or
   "success"):** the share of paths that ended at or above the target. Say "In
   X% of simulated paths…". Rough meaning: above 80% is comfortable, 60-80% is
   likely with real risk, 40-60% is a coin flip, and below 40% means the plan
-  as specified probably falls short.
+  as specified probably falls short. Klar prints ">99%" or "<1%" at the
+  extremes; repeat that wording rather than rounding to 100% or 0%.
 - **Probability of gain:** the share of paths that ended above the starting
   value.
 - **Probability of ruin:** the share of paths that ran out of money. This

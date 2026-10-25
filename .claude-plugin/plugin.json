@@ -2,7 +2,7 @@
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "klar",
   "displayName": "Klar Portfolio Analytics",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Portfolio analytics in Claude: upload a brokerage CSV and get performance vs SPY, risk metrics, Fama-French factor exposure, goal scoring and Monte Carlo projections, with an inline dashboard and an analyst playbook.",
   "author": {
     "name": "Klar Analytics",
