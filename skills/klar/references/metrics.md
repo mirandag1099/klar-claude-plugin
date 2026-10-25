@@ -143,10 +143,11 @@ stretch, and each holding's move. Quote those facts.
 - Say a holding didn't help only if it fell as much as or more than stocks over
   that stretch.
 
-**Price-only caveat:** figures exclude dividends and bond interest, so bond and
-dividend funds' drawdowns look deeper than investors experienced (BND's 2022
-decline was about -23% in price, about -18% including interest). Mention it
-when bond or income funds matter to the conclusion.
+**Total returns:** all of Klar's returns and drawdowns include dividends, bond
+interest and fund distributions, reinvested (Yahoo Finance adjusted prices). They
+match brokerage statements and fund fact sheets, not Yahoo's price chart. BND's
+2021-2022 decline, for example, was about -18% including interest (about -23% in
+price alone). If a user compares with a price chart, explain the difference.
 
 ### Correlation
 

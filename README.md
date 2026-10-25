@@ -33,7 +33,7 @@ Then start a new conversation, attach your positions CSV, and say "analyze my po
 
 ## Good to know
 
-- Results are based on historical prices from Yahoo Finance and factor data from the Kenneth French Data Library. Performance figures use price returns; factor regressions include dividends.
+- Results are based on historical prices from Yahoo Finance and factor data from the Kenneth French Data Library. Returns are total returns: dividends, bond interest and fund distributions are reinvested.
 - Klar provides information and analysis, **not financial advice**. Past performance doesn't predict future results, and every decision stays yours.
 - Klar keeps no accounts and no database. See [PRIVACY.md](PRIVACY.md) for exactly what data the server handles.
 
