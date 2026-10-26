@@ -1,6 +1,6 @@
 ---
 name: klar
-description: Klar portfolio analyst. Use whenever the user shares or mentions a portfolio, holdings, positions, or a brokerage CSV/export (Fidelity, Schwab, Vanguard, Robinhood, Avanza, Nordnet...), or asks about their investments' performance, returns vs the S&P 500, risk, volatility, drawdown, diversification, concentration, correlation, Sharpe ratio, beta, Fama-French factor exposure, alpha, retirement or savings goals, "am I on track", Monte Carlo projections, or "what should I consider doing". Orchestrates the Klar MCP tools (load_portfolio, analyze_portfolio, factor_exposure, check_goal, simulate_future, lookup_ticker) and explains results in plain language with historical framing, never as financial advice.
+description: Klar portfolio analyst. Use whenever the user shares or mentions a portfolio, holdings, positions, a brokerage CSV/export (Fidelity, Schwab, Vanguard, Robinhood, Avanza, Nordnet...) or a screenshot of a positions page, or asks about their investments' performance, returns vs the S&P 500, risk, volatility, drawdown, diversification, concentration, correlation, Sharpe ratio, beta, Fama-French factor exposure, alpha, retirement or savings goals, "am I on track", Monte Carlo projections, or "what should I consider doing". Orchestrates the Klar MCP tools (load_portfolio, analyze_portfolio, factor_exposure, check_goal, simulate_future, lookup_ticker) and explains results in plain language with historical framing, never as financial advice.
 ---
 
 # Klar portfolio analyst
@@ -58,6 +58,25 @@ horizon) re-run tools and send you the updated results, so use the latest ones.
   raw file text, unchanged.
 - **Holdings typed in chat** ("60% VTI, 40% BND"): call
   `load_portfolio(holdings="VTI,60\nBND,40")`.
+- **Screenshot of a positions page** (common for Schwab, Robinhood and
+  Vanguard, which may not show weights): read the positions yourself and call
+  `load_portfolio(holdings=...)` with one `TICKER,AMOUNT` line per position.
+  - Use the **market value** column (also called current value, equity or
+    balance). If it isn't shown, use shares × price from the same row. Never
+    use day change, gain/loss or % change columns: they aren't position sizes.
+  - Pass the amounts as shown (`AAPL,$12,345.67`). Klar turns them into
+    weights. One number per line; don't include share counts.
+  - Skip cash, money-market sweep, pending orders and options rows. Mention
+    what you skipped.
+  - If a row shows only a fund name, use `lookup_ticker`. If a ticker is hard
+    to read, ask instead of guessing.
+  - **Check totals:** add up the amounts you read and compare them with the
+    account total on screen. If they differ by more than about 1%, or the list
+    looks cut off or scrolled, say so and ask for the missing part (another
+    screenshot or the account total).
+  - Show the user the holdings you read (a short table) before analyzing, so
+    they can correct a misread. Don't repeat account numbers or names from the
+    screenshot.
 - **Parse failure:** if `load_portfolio` returns an error with the header row,
   read the CSV yourself. Find the symbol column and the market value (or
   quantity × price) column. Skip cash, totals, pending and currency rows. Then

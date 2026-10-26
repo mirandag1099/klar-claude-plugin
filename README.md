@@ -1,6 +1,6 @@
 # Klar Portfolio Analytics for Claude
 
-Klar turns Claude into a portfolio analyst. Attach a positions export from your brokerage (Fidelity, Schwab, Vanguard, Robinhood, Interactive Brokers and many international brokers) or just type your holdings, and ask Claude to analyze your portfolio. Klar runs the numbers on real market data and shows an interactive dashboard right in the conversation, and Claude explains what it means and answers your follow-up questions.
+Klar turns Claude into a portfolio analyst. Attach a positions export from your brokerage (Fidelity, Schwab, Vanguard, Robinhood, Interactive Brokers and many international brokers) take a screenshot of your positions page, or just type your holdings, and ask Claude to analyze your portfolio. Klar runs the numbers on real market data and shows an interactive dashboard right in the conversation, and Claude explains what it means and answers your follow-up questions.
 
 ![Klar performance dashboard in Claude](assets/screenshots/performance.png)
 
