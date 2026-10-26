@@ -149,6 +149,24 @@ match brokerage statements and fund fact sheets, not Yahoo's price chart. BND's
 2021-2022 decline, for example, was about -18% including interest (about -23% in
 price alone). If a user compares with a price chart, explain the difference.
 
+### Sector exposure (look-through)
+
+**What it is:** what industries the portfolio actually owns. Funds are split into
+their holdings' sectors and scaled by the fund's weight: VOO at 20% of the
+portfolio with 40% in technology adds 8 points of technology, not 40. Individual
+stocks count fully in their sector, bond and cash shares show as Bonds and Cash,
+and holdings without data show as Unclassified.
+
+**How to read it:** compare the **share of stocks** column with SPY's, not the
+whole-portfolio column, or bonds make every sector look underweight. Lead with
+the biggest tilt the summary names, and connect it to concentration: several
+funds and stocks can all feed the same sector.
+
+**Caveats:** sector mixes are funds' current holdings (Yahoo/Morningstar), not
+their history over the analysis window. Yahoo files some big tech names outside
+Technology (Alphabet in Communication Services, Amazon in Consumer Cyclical), so
+"tech exposure" in everyday terms can be larger than the Technology row.
+
 ### Correlation
 
 **What it is:** how closely two holdings move together, from -1 (opposite) to
