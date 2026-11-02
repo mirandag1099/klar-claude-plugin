@@ -6,6 +6,11 @@ language, how to read it, and what to tell the user. Thresholds marked
 match the tool's labels. The other ranges are rules of thumb. Present them as
 "typically", not as rules.
 
+The figures and thresholds here are for your reading of the results. In your
+reply, follow the skill's storytelling rules: say what the numbers mean in
+plain words instead of reading them back, since the dashboard already shows
+them.
+
 ## Units first
 
 - **`analyze_portfolio` values are already percentages.** `annualVolatility:
@@ -122,14 +127,14 @@ is stable or drifting.
 **What it is:** the largest peak-to-trough decline in the period. It's the
 worst loss someone who bought at the top would have experienced.
 
-**How to read it:** turn it into dollars. A -34% drawdown means $100,000 fell
-to $66,000. Compare it to SPY's drawdown in the same window. Also note the
+**How to read it:** make it concrete. A -34% drawdown means a third of the
+money was gone at the worst point. Compare it to SPY's drawdown in the same window. Also note the
 recovery: a -50% loss needs a +100% gain to break even. The question to ask is
 whether the user could have held through it without selling.
 
 **Use the "Worst drawdown" section, not guesses.** It gives the peak and low
 dates, whether and when the portfolio recovered, SPY's move over the same
-stretch, and each holding's move. Quote those facts.
+stretch, and each holding's move. Build the drawdown story from those facts.
 
 **Judging whether a holding helped (be precise):**
 - If the portfolio fell less than SPY over the stretch, the mix **cushioned**
@@ -379,11 +384,12 @@ are taken as a percentage of the balance.
 - **Fan chart:** shows the percentile paths spreading out over time. The
   widening band shows uncertainty growing with the horizon.
 - **Probability of reaching the target (`probability_above_target`, or
-  "success"):** the share of paths that ended at or above the target. Say "In
-  X% of simulated paths…". Rough meaning: above 80% is comfortable, 60-80% is
+  "success"):** the share of paths that ended at or above the target. Say it
+  as odds in plain words ("in about two out of three simulated paths…"). Rough meaning: above 80% is comfortable, 60-80% is
   likely with real risk, 40-60% is a coin flip, and below 40% means the plan
   as specified probably falls short. Klar prints ">99%" or "<1%" at the
-  extremes; repeat that wording rather than rounding to 100% or 0%.
+  extremes; if you state the figure, keep that wording rather than rounding
+  to 100% or 0%.
 - **Probability of gain:** the share of paths that ended above the starting
   value.
 - **Probability of ruin:** the share of paths that ran out of money. This
