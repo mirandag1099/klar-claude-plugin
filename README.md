@@ -28,14 +28,14 @@ Then start a new conversation, attach your positions CSV, and say "analyze my po
 
 ## What's in this plugin
 
-- **Klar connector**: the tools Claude calls to load a portfolio, analyze performance, run factor regressions, score goals, simulate outcomes and look up tickers, plus the inline dashboard. They run on Klar's server at `https://mcp.klaranalytics.com/mcp`.
+- **Klar connector**: the tools Claude calls to load a portfolio, analyze performance, run factor regressions, score goals, simulate outcomes and look up tickers, plus the inline dashboard. They run on Klar's server at `https://mcp.klaranalytics.com/mcp`. The server also has one tool that only the dashboard calls, `get_view_data`, which fetches chart data for the view on screen. Claude doesn't call it, so the large chart series stay out of the conversation.
 - **Klar skill**: the analyst playbook Claude follows: which analysis to run when, how to read each metric (`skills/klar/references/metrics.md`), and four modes (Analyst, Auditor, Planner, Coach).
 
 ## Good to know
 
 - Results are based on historical prices from Yahoo Finance and factor data from the Kenneth French Data Library. Returns are total returns: dividends, bond interest and fund distributions are reinvested.
 - Klar provides information and analysis, **not financial advice**. Past performance doesn't predict future results, and every decision stays yours.
-- Klar keeps no accounts and no database. See [PRIVACY.md](PRIVACY.md) for exactly what data the server handles.
+- Klar keeps no accounts and no database. See the [privacy policy](https://klaranalytics.com/privacy) for exactly what data the server handles and how long it's kept.
 
 ## Support
 
