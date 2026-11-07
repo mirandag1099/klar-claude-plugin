@@ -310,11 +310,13 @@ Ported from the Klar insight prompts. Apply these alongside
   which is relevant to fees.
 - **Attribution:** split the return into market, other factors, and the
   unexplained residual (alpha, which can be skill or luck).
-- **VaR and expected shortfall:** VaR is the line the worst 5% (or 1%) of
-  days or months crossed; expected shortfall is how bad those were on
-  average, so lead with it. Compare both with the benchmark in words, and
-  point out when the bell-curve VaR understates the real one (fat tails).
-  VaR is not a worst case: the worst day and the crises show what lies beyond.
+- **VaR and expected shortfall:** say the maximum loss at 95% confidence
+  first ("with 95% confidence, it lost no more than $363 in a day"), then the
+  expected shortfall (the average loss in the worst 5%), then the multiple of
+  the benchmark. Use percentages for confidence, not "1 day in 20". Point out
+  when the parametric (bell-curve) VaR understates the historical one (fat
+  tails). VaR is not a worst case: the worst days and the crises show what
+  lies beyond.
 - **Crises:** tell what happened to this portfolio in each complete crisis
   compared with the benchmark, how deep it went and how long it took to get
   back, and what in the mix explains the difference. Incomplete crises have
