@@ -212,41 +212,27 @@ amounts are on $10,000 unless the user gave a portfolio value.
 
 ### Value at Risk (VaR)
 
-**What it is:** the largest loss at a confidence level, taken from this
-portfolio's own daily returns over the analysis window (historical VaR,
-rebalanced daily to today's weights). It includes every day in the window,
-crises too, so it isn't limited to "normal conditions". The 1-month figure
-uses every overlapping 21-trading-day stretch, not a scaled-up daily number.
+**What it is:** historical, from this portfolio's own daily returns over the
+analysis window (rebalanced daily to today's weights). The 1-day 95% VaR is
+the return that the worst 5% of days fell to or below. The 1-month figure uses
+every overlapping 21-trading-day stretch, not a scaled-up daily number.
 
-**How to say it:** in this order, with confidence as a percentage:
-1. Maximum loss: "With 95% confidence, the portfolio lost no more than $363
-   (3.6%) in a day" (and the 99% figure).
-2. Expected shortfall: "In the worst 5% of days, it lost $549 (5.5%) on
-   average."
-3. Scale: "That's 2.1x SPY's 1-day VaR of $177."
-Say "95%" and "5%", not "19 days out of 20". VaR is not a worst case: the
-worst days table and the crises show what lies beyond it.
+**How to read it:** "on about one day in twenty, the portfolio lost 1.6% or
+more". It is a threshold, not a worst case. Typical 1-day 95% VaR: about
+-1.7% for the S&P 500 over the last 10 years; diversified 60/40 mixes are
+lower, concentrated or tech-heavy portfolios higher.
 
-**Typical levels:** 1-day 95% VaR of about 1.7% for the S&P 500 over the last
-10 years; diversified 60/40 mixes are lower, concentrated or single-stock
-portfolios higher.
+**Breaches:** the share of days worse than the 95% VaR should be about 5% by
+construction; it confirms the figure, nothing more.
 
-**Parametric VaR:** `normalVar` is the textbook variance-covariance VaR, from
-a normal distribution with the same mean and volatility. When the historical
-99% VaR is worse than the parametric one, the tail is fatter than a bell curve
-predicts; say by how much in dollars.
+**Bell-curve comparison:** `normalVar` is what a normal distribution with the
+same mean and volatility would give. When the real 99% VaR is noticeably
+worse, say the tail is fatter than a bell curve predicts.
 
 ### Expected shortfall (CVaR)
 
 The average loss on the days (or months) beyond the VaR line. It answers
-"when it's bad, how bad?", which VaR doesn't.
-
-### How often bad days happened, and worst days
-
-The share of trading days with a loss of at least 1%, 2%, 3%, 5%, 7% and 10%,
-for the portfolio and the benchmark, and the five worst days with the
-benchmark's move the same day. A worst day where the benchmark barely moved
-points to something specific to a holding (earnings, news), not the market.
+"when it's bad, how bad?", which VaR doesn't, so it's the better headline.
 
 ### Past crises (stress scenarios)
 
