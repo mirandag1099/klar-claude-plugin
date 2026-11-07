@@ -41,7 +41,7 @@ trying again in a minute; don't fill the gap with estimates.
 |---|---|
 | `load_portfolio(csv_content \| holdings \| accounts)` | Turning a CSV, a typed list, or several accounts (each with an optional dollar `value`) into normalized `TICKER,WEIGHT` holdings. Always the first call. |
 | `analyze_portfolio(holdings, start_date?)` | Performance vs SPY, risk metrics, top contributors, drawdown. Renders the inline dashboard. |
-| `factor_exposure(holdings, model, start_date?, end_date?)` | Fama-French loadings, t-stats, R², alpha. `model` is `CAPM`, `3-factor`, `4-factor` or `5-factor`. Uses the top 20 holdings at most. |
+| `factor_exposure(holdings, model, start_date?, end_date?)` | Fama-French loadings, t-stats, R², alpha. `model` is `3-factor` (default) or `5-factor`. Uses the top 20 holdings at most. |
 | `check_goal(holdings, goal_type, target_amount, time_horizon_years, risk_tolerance, monthly_contribution, initial_value, current_age?, retirement_age?)` | Goal score (0-100), grade, five dimensions, rule-based recommendations. |
 | `simulate_future(holdings, initial_value, time_horizon_years, annual_contribution?, withdrawal_rate?, inflation_rate?, target_value?)` | Monte Carlo percentile outcomes and success probability. `withdrawal_rate` and `inflation_rate` are decimals (0.04 = 4%); contributions are per year. |
 | `lookup_ticker(query)` | Resolving a fund or company name, or an unrecognized symbol, to a ticker. |
@@ -202,7 +202,7 @@ comparison?"* Run it only if the user says yes.
 - **"What's driving my returns?", "Am I a value investor?", "Is my fund
   manager adding anything?"** → `factor_exposure`. Default to `3-factor`. Use
   `5-factor` when the user asks about quality, profitability or investment
-  style, and `4-factor` when they ask about momentum. If the portfolio has more
+  style. Klar doesn't offer momentum or CAPM-only models. If the portfolio has more
   than 20 holdings, say that the analysis covers the top 20 by weight,
   renormalized.
 - **"Am I on track?", retirement, house, education, income** → `check_goal`,

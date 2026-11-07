@@ -233,13 +233,10 @@ portfolio behaves like that factor.
 | HML | value | value tilt (cheap, low price-to-book) | growth tilt |
 | RMW | profitability (5-factor) | robust, profitable companies | weak profitability |
 | CMA | investment (5-factor) | conservative investors (low asset growth) | aggressive investors |
-| MOM | momentum (4-factor) | recent winners | recent losers |
 
 **Models:**
 
-- **CAPM:** market only.
 - **3-factor:** market, size and value.
-- **4-factor (Carhart):** adds momentum.
 - **5-factor:** adds profitability and investment. HML often weakens in this
   model because RMW and CMA absorb part of it.
 
