@@ -20,11 +20,7 @@ them.
   loadings, t-stats and R² are plain numbers (R² can also be shown as a
   percentage).
 - **Other tools:** follow the units the tool text states. In the raw factor
-  output, alpha is a decimal (`0.024` is 2.4% a year). In Monte Carlo inputs,
-  rates such as withdrawal and inflation are decimals (`0.04` is 4%), unless
-  the tool's schema says otherwise.
-- **Money amounts are nominal dollars** unless the tool labels them
-  inflation-adjusted.
+  output, alpha is a decimal (`0.024` is 2.4% a year).
 
 ## Return metrics
 
@@ -75,17 +71,6 @@ average. Roughly 1 year in 20 lands more than two volatilities away.
 | 60/40 balanced | about 9-11% |
 | S&P 500 | about 15-18% long-run |
 | Concentrated or tech-heavy portfolios, single stocks | 25%+ |
-
-**Klar risk tolerance bands (Klar):** `check_goal` compares volatility to
-these bands.
-
-| Tolerance | Label | Volatility range |
-|---|---|---|
-| 1 | Very Conservative | 0-8% |
-| 2 | Conservative | 5-12% |
-| 3 | Moderate | 10-18% |
-| 4 | Aggressive | 15-25% |
-| 5 | Very Aggressive | 20-35% |
 
 ### Sharpe ratio
 
@@ -292,106 +277,3 @@ average factor premium) plus alpha.
 **How to read it:** say how much came from simply being in the market versus
 tilts versus the unexplained residual. Factor premiums are averages over the
 sample and vary a lot from decade to decade.
-
-## Goal score (`check_goal`)
-
-**Overall score:** 0-100, a weighted average of the dimensions below **(Klar)**.
-If Monte Carlo is unavailable, `goal_probability` is dropped and the other
-weights are rescaled.
-
-| Dimension | Weight | What it measures |
-|---|---|---|
-| `return_adequacy` | 25 | Historical CAGR vs the CAGR needed to reach the target from `initial_value` over the horizon, with monthly contributions growing 2.5% a year with inflation (the same assumptions as the simulation). 100 if the historical rate is at least 1.2× the required rate. 80-100 if it is at least 1×. 30-80 if it is at least 0.5×. Below 30 otherwise. |
-| `goal_probability` | 25 | The Monte Carlo probability of reaching the target, mapped directly (68% = 68). Shown as ">99%" or "<1%" at the extremes; never present a simulation as certain. |
-| `risk_alignment` | 20 | Portfolio volatility vs the risk-tolerance band in the volatility table above. Highest inside the band, lower the further outside it. |
-| `diversification` | 20 | The average of three sub-scores (see below). |
-| `drawdown_resilience` | 10 | Max drawdown vs a tolerance that grows with the horizon: `min(50%, 5% + 1.5% × years)`. A 20-year horizon tolerates 35%. |
-
-**Diversification sub-scores:**
-
-| Sub-score | Scale |
-|---|---|
-| Holding count | 1 holding = 10, 2-3 = 30, 4-6 = 50, 7-10 = 70, 11-15 = 85, 16+ = 100 |
-| Top-3 concentration | under 30% = 100, under 50% = 80, under 70% = 55, under 90% = 30, otherwise 10 |
-| Average pairwise correlation | under 0.3 = 100, under 0.5 = 75, under 0.7 = 50, under 0.85 = 25, otherwise 10 |
-
-**Grades (Klar):**
-
-| Grade | Score | Label |
-|---|---|---|
-| A | 90+ | Excellent |
-| B | 75-89 | Good |
-| C | 60-74 | Adequate |
-| D | 45-59 | Below Average |
-| F | below 45 | Poor |
-
-**Dimension labels (Klar):** Strong (80+), Adequate (60-79), Challenging
-(40-59), Unlikely (below 40). The goal probability has its own labels: Highly
-Likely (above 80), Likely (above 60), Uncertain (above 40), Unlikely (above
-20), Very Unlikely (otherwise).
-
-**How to present it:**
-
-1. Give the overall score and grade.
-2. Name the weakest dimension and explain why, using its `detail` text.
-3. Present the tool's recommendations as rule-based suggestions.
-
-The score depends entirely on the inputs. Changing the horizon or contribution
-can move it a lot, so offer to rerun it with different inputs.
-
-**Target dollars:** `target_amount` is in dollars at the horizon (nominal). The
-summary also states what the target buys in today's dollars at 2.5% inflation
-(e.g. $2M in 30 years ≈ $953k today). If the user meant today's dollars, say so
-and offer to rerun with the inflated target (today's amount × 1.025^years).
-
-**Historical returns as expectations:** both `return_adequacy` and
-`goal_probability` assume the future resembles the analysis window. After an
-exceptional decade (for example one holding with a huge run), say plainly that
-the score leans on that history.
-
-## Monte Carlo (`simulate_future`)
-
-**Method:** Klar simulates thousands of possible futures. Each one draws random
-daily returns from a normal distribution with the portfolio's historical
-average return and volatility over the analysis window (10 years by default),
-applied month by month. It does not resample actual historical days.
-Contributions are added monthly and grow with inflation each year. Withdrawals
-are taken as a percentage of the balance.
-
-**Limits to mention when they matter:**
-
-- The draws assume normal, independent returns, so real crashes, fat tails and
-  long bear markets are under-represented. That makes the weak-case
-  percentiles somewhat optimistic.
-- The results depend heavily on the historical window. A strong decade makes
-  every percentile look better.
-- Terminal values are in nominal dollars unless the tool says otherwise.
-  Deflate them before saying "in today's money".
-
-**How to read the outputs:**
-
-- **Percentiles (p5, p25, p50, p75, p95):**
-  - p50 (the median) is the middle outcome: half the paths ended above it and
-    half below.
-  - p25-p75 is the typical range: half of all paths ended inside it.
-  - p5 is a bad-but-plausible case (1 in 20 paths did worse); p95 is a strong
-    case.
-  - Present a range (p25-p75 for typical, p5-p95 for the full spread), never
-    just the median, and never the mean, which large winners pull upward.
-- **Fan chart:** shows the percentile paths spreading out over time. The
-  widening band shows uncertainty growing with the horizon.
-- **Probability of reaching the target (`probability_above_target`, or
-  "success"):** the share of paths that ended at or above the target. Say it
-  as odds in plain words ("in about two out of three simulated paths…"). Rough meaning: above 80% is comfortable, 60-80% is
-  likely with real risk, 40-60% is a coin flip, and below 40% means the plan
-  as specified probably falls short. Klar prints ">99%" or "<1%" at the
-  extremes; if you state the figure, keep that wording rather than rounding
-  to 100% or 0%.
-- **Probability of gain:** the share of paths that ended above the starting
-  value.
-- **Probability of ruin:** the share of paths that ran out of money. This
-  matters only with withdrawals. Anything above about 5-10% at a given
-  withdrawal rate is worth pointing out.
-- **Sensitivity:** to show what changes the odds (contribution, horizon,
-  withdrawal rate or allocation), offer to rerun the tool with the changed
-  input, and rerun it when the user asks. Don't extrapolate.

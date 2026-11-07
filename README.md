@@ -8,10 +8,8 @@ Klar turns Claude into a portfolio analyst. Attach a positions export from your 
 
 - **"Analyze my portfolio."** Returns versus the S&P 500 (1 month to 10 years), annual growth rate, volatility, worst drawdown, Sharpe and Sortino ratios, beta, which holdings drove returns and risk, correlations, calendar-year and monthly returns, and a risk/return map against the efficient frontier and major benchmarks.
 - **"What's really driving my returns?"** Fama-French factor analysis (3-factor and 5-factor models): how much of your return comes from the market, company size, value, profitability and investment style, and whether any "alpha" is statistically meaningful.
-- **"Am I on track to retire with $1M in 25 years?"** A 0–100 goal score covering required return, risk fit, diversification, drawdown resilience and the probability of reaching your target.
-- **"What could my portfolio be worth in 20 years?"** Monte Carlo simulations with good, typical and bad-case outcomes, contributions and withdrawals.
 
-The dashboard has controls for the period, the factor model and the time horizon, and Claude sees whatever you change.
+The dashboard has controls for the period, the benchmark and the factor model, and Claude sees whatever you change.
 
 ## Install
 
@@ -28,8 +26,8 @@ Then start a new conversation, attach your positions CSV, and say "analyze my po
 
 ## What's in this plugin
 
-- **Klar connector**: the tools Claude calls to load a portfolio, analyze performance, run factor regressions, score goals, simulate outcomes and look up tickers, plus the inline dashboard. They run on Klar's server at `https://mcp.klaranalytics.com/mcp`. The server also has one tool that only the dashboard calls, `get_view_data`, which fetches chart data for the view on screen. Claude doesn't call it, so the large chart series stay out of the conversation.
-- **Klar skill**: the analyst playbook Claude follows: which analysis to run when, how to read each metric (`skills/klar/references/metrics.md`), and four modes (Analyst, Auditor, Planner, Coach).
+- **Klar connector**: the tools Claude calls to load a portfolio, analyze performance, run factor regressions and look up tickers, plus the inline dashboard. They run on Klar's server at `https://mcp.klaranalytics.com/mcp`. The server also has one tool that only the dashboard calls, `get_view_data`, which fetches chart data for the view on screen. Claude doesn't call it, so the large chart series stay out of the conversation.
+- **Klar skill**: the analyst playbook Claude follows: which analysis to run when, how to read each metric (`skills/klar/references/metrics.md`), and three modes (Analyst, Auditor, Coach).
 
 ## Good to know
 
