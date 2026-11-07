@@ -205,6 +205,55 @@ mix them with the CAGR figures elsewhere in the summary.
 - It's backward-looking and favors whatever did best. Describe it; never use
   it to propose weights.
 
+## Downside risk (`downside_risk`)
+
+All values in this tool's output are decimals shown as percentages, and loss
+amounts are on $10,000 unless the user gave a portfolio value.
+
+### Value at Risk (VaR)
+
+**What it is:** historical, from this portfolio's own daily returns over the
+analysis window (rebalanced daily to today's weights). The 1-day 95% VaR is
+the return that the worst 5% of days fell to or below. The 1-month figure uses
+every overlapping 21-trading-day stretch, not a scaled-up daily number.
+
+**How to read it:** "on about one day in twenty, the portfolio lost 1.6% or
+more". It is a threshold, not a worst case. Typical 1-day 95% VaR: about
+-1.7% for the S&P 500 over the last 10 years; diversified 60/40 mixes are
+lower, concentrated or tech-heavy portfolios higher.
+
+**Breaches:** the share of days worse than the 95% VaR should be about 5% by
+construction; it confirms the figure, nothing more.
+
+**Bell-curve comparison:** `normalVar` is what a normal distribution with the
+same mean and volatility would give. When the real 99% VaR is noticeably
+worse, say the tail is fatter than a bell curve predicts.
+
+### Expected shortfall (CVaR)
+
+The average loss on the days (or months) beyond the VaR line. It answers
+"when it's bad, how bad?", which VaR doesn't, so it's the better headline.
+
+### Past crises (stress scenarios)
+
+Fixed windows from the S&P 500's peak to its trough (9/11 uses the week of
+the attacks): dot-com bust, 9/11, 2008 financial crisis, 2011 debt ceiling and
+downgrade, Q4 2018, COVID crash, 2022 inflation and rate shock, 2025 tariff
+shock. Results are real total returns, daily-rebalanced to today's weights.
+
+- **Return:** the portfolio's change from the start to the end of the window,
+  next to the benchmark's.
+- **Worst point:** the lowest value inside the window.
+- **Recovered:** the first day after the low when the portfolio was back to
+  its starting value, or "not yet".
+- **Incomplete:** at least one holding wasn't trading for the whole window.
+  There is no portfolio result; the holdings that did trade show their own
+  returns. Klar never estimates the missing ones. A stand-in the user chooses
+  replaces a holding one-for-one with its own real returns, and only in the
+  crises the holding missed.
+
+These show how today's mix would have fared then, not what will happen next.
+
 ## Factor analysis (Fama-French)
 
 The regression explains the portfolio's excess return (return minus the T-bill

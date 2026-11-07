@@ -2,8 +2,8 @@
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "klar",
   "displayName": "Klar Portfolio Analytics",
-  "version": "0.4.0",
-  "description": "Portfolio analytics in Claude: upload a brokerage CSV and get performance vs SPY or a benchmark you choose, risk metrics and Fama-French factor exposure, with an inline dashboard and an analyst playbook.",
+  "version": "0.5.0",
+  "description": "Portfolio analytics in Claude: upload a brokerage CSV and get performance vs SPY or a benchmark you choose, risk metrics, Fama-French factor exposure, Value at Risk and past-crisis stress tests, with an inline dashboard and an analyst playbook.",
   "author": {
     "name": "Klar Analytics",
     "url": "https://klaranalytics.com"
@@ -15,7 +15,9 @@
     "investing",
     "fama-french",
     "factor-analysis",
-    "risk"
+    "risk",
+    "value-at-risk",
+    "stress-test"
   ],
   "license": "MIT",
   "icon": "./icon.png",
