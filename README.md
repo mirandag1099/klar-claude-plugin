@@ -9,6 +9,7 @@ Klar turns Claude into a portfolio analyst. Attach a positions export from your 
 - **"Analyze my portfolio."** Returns versus the S&P 500 (1 month to 10 years), annual growth rate, volatility, worst drawdown, Sharpe and Sortino ratios, beta, which holdings drove returns and risk, correlations, calendar-year and monthly returns, and a risk/return map against the efficient frontier and major benchmarks.
 - **"What's really driving my returns?"** Fama-French factor analysis (3-factor and 5-factor models): how much of your return comes from the market, company size, value, profitability and investment style, and whether any "alpha" is statistically meaningful.
 
+- **"Is my portfolio expensive?"** P/E, forward P/E, P/B and P/S for your portfolio against the S&P 500 (combined the way fund providers do), plus ROE, margins, net income growth and debt/equity, and which holdings you pay most for relative to their earnings.
 - **"How much could I lose?"** Historical Value at Risk and expected shortfall for a day and a month, and how your portfolio would have done in past crises (dot-com bust, 9/11, 2008, COVID, the 2022 rate shock and more), from real prices only. If a holding wasn't trading yet, Klar says so instead of guessing, and you can pick a stand-in.
 
 The dashboard has controls for the period, the benchmark and the factor model, and Claude sees whatever you change.
@@ -28,7 +29,7 @@ Then start a new conversation, attach your positions CSV, and say "analyze my po
 
 ## What's in this plugin
 
-- **Klar connector**: the tools Claude calls to load a portfolio, analyze performance, run factor regressions, measure downside risk and look up tickers, plus the inline dashboard. They run on Klar's server at `https://mcp.klaranalytics.com/mcp`. The server also has one tool that only the dashboard calls, `get_view_data`, which fetches chart data for the view on screen. Claude doesn't call it, so the large chart series stay out of the conversation.
+- **Klar connector**: the tools Claude calls to load a portfolio, analyze performance, run factor regressions, measure downside risk, value the holdings and look up tickers, plus the inline dashboard. They run on Klar's server at `https://mcp.klaranalytics.com/mcp`. The server also has one tool that only the dashboard calls, `get_view_data`, which fetches chart data for the view on screen. Claude doesn't call it, so the large chart series stay out of the conversation.
 - **Klar skill**: the analyst playbook Claude follows: which analysis to run when, how to read each metric (`skills/klar/references/metrics.md`), and three modes (Analyst, Auditor, Coach).
 
 ## Good to know

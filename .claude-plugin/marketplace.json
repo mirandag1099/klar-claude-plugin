@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "klar-analytics",
-  "description": "Klar Analytics plugins for Claude: portfolio performance, risk, factor and downside-risk analysis.",
+  "description": "Klar Analytics plugins for Claude: portfolio performance, risk, factor, downside-risk and valuation analysis.",
   "owner": {
     "name": "Klar Analytics",
     "url": "https://klaranalytics.com"
@@ -10,7 +10,7 @@
     {
       "name": "klar",
       "source": "./",
-      "description": "Portfolio analytics from a brokerage CSV: performance vs SPY or a benchmark you choose, risk, Fama-French factors, VaR and crisis stress tests, with an inline dashboard.",
+      "description": "Portfolio analytics from a brokerage CSV: performance vs SPY or a benchmark you choose, risk, Fama-French factors, VaR, crisis stress tests and valuation ratios, with an inline dashboard.",
       "category": "finance",
       "tags": [
         "portfolio",
