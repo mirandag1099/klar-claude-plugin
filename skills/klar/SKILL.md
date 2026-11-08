@@ -1,6 +1,6 @@
 ---
 name: klar
-description: Klar portfolio analyst. Use whenever the user shares or mentions a portfolio, holdings, positions, a brokerage CSV/export (Fidelity, Schwab, Vanguard, Robinhood, Avanza, Nordnet...) or a screenshot of a positions page, or asks about their investments' performance, returns vs the S&P 500, risk, volatility, drawdown, diversification, concentration, correlation, Sharpe ratio, beta, Fama-French factor exposure, alpha, Value at Risk, expected shortfall, "how much could I lose", stress tests or how the portfolio would have done in a crash (2008, COVID, dot-com, 9/11), or "what should I consider doing". Orchestrates the Klar MCP tools (load_portfolio, analyze_portfolio, factor_exposure, downside_risk, lookup_ticker) and explains results in plain language with historical framing, never as financial advice.
+description: Klar portfolio analyst. Use whenever the user shares or mentions a portfolio, holdings, positions, a brokerage CSV/export (Fidelity, Schwab, Vanguard, Robinhood, Avanza, Nordnet...) or a screenshot of a positions page, or asks about their investments' performance, returns vs the S&P 500, risk, volatility, drawdown, diversification, concentration, correlation, Sharpe ratio, beta, Fama-French factor exposure, alpha, Value at Risk, expected shortfall, "how much could I lose", stress tests or how the portfolio would have done in a crash (2008, COVID, dot-com, 9/11), valuation (P/E, P/B, P/S, "is my portfolio expensive", ROE, earnings growth, debt/leverage), or "what should I consider doing". Orchestrates the Klar MCP tools (load_portfolio, analyze_portfolio, factor_exposure, downside_risk, valuation, lookup_ticker) and explains results in plain language with historical framing, never as financial advice.
 ---
 
 # Klar portfolio analyst
@@ -42,6 +42,7 @@ trying again in a minute; don't fill the gap with estimates.
 | `load_portfolio(csv_content \| holdings \| accounts)` | Turning a CSV, a typed list, or several accounts (each with an optional dollar `value`) into normalized `TICKER,WEIGHT` holdings. Always the first call. |
 | `analyze_portfolio(holdings, start_date?)` | Performance vs SPY, risk metrics, top contributors, drawdown. Renders the inline dashboard. |
 | `factor_exposure(holdings, model, start_date?, end_date?)` | Fama-French loadings, t-stats, R², alpha. `model` is `3-factor` (default) or `5-factor`. Uses the top 20 holdings at most. |
+| `valuation(holdings, benchmark?)` | P/E, forward P/E, P/B, P/S (harmonic weighted means), dividend yield, ROE, net margin, net income growth and debt/equity for the stock part of the portfolio vs the benchmark, each with its coverage, plus each holding's weight vs share of earnings. Renders the Valuation dashboard. |
 | `downside_risk(holdings, benchmark?, start_date?, portfolio_value?, substitutes?)` | Historical VaR and expected shortfall (1 day, 1 month; 95%, 99%) vs the benchmark, and the portfolio's real returns in past crises. Loss amounts on $10,000 unless `portfolio_value` is given. `substitutes` maps a holding to a stand-in the user chose. Renders the Downside risk dashboard. |
 | `lookup_ticker(query)` | Resolving a fund or company name, or an unrecognized symbol, to a ticker. |
 
@@ -206,6 +207,10 @@ comparison?"* Run it only if the user says yes.
   Klar doesn't offer goal scoring or projections right now. Say so in one
   line and offer what Klar can show instead (how the portfolio has done and
   what drives it). Don't project future values yourself.
+- **"Is my portfolio expensive?", P/E, P/B, P/S, "what am I paying for", ROE,
+  earnings growth, leverage** → `valuation`. Funds report only P/E, P/B, P/S
+  and yield, so a fund-heavy portfolio has no ROE, margin, growth or
+  debt/equity; say so rather than estimating them.
 - **"How much could I lose?", "How risky is this?", VaR, "What if 2008 happens
   again?", stress tests** → `downside_risk`. Pass `portfolio_value` when the
   user's file or message gives a total; otherwise losses are shown on $10,000,
@@ -319,6 +324,13 @@ Ported from the Klar insight prompts. Apply these alongside
   compared with the benchmark, how deep it went and how long it took to get
   back, and what in the mix explains the difference. Incomplete crises have
   no portfolio result; don't infer one.
+- **Valuation:** compare each multiple with the benchmark in words ("about
+  half SPY's P/E"), then say why: which holdings are cheap or expensive
+  (weight vs share of earnings shows who you pay most for), whether the
+  quality figures (ROE, margin, growth) justify the price, and how leveraged
+  the companies are. Mention coverage when it's under 100% and what was left
+  out (bond funds, cash, missing data). These are today's ratios, not a
+  forecast; a low P/E isn't automatically a bargain.
 
 ## Guardrails
 

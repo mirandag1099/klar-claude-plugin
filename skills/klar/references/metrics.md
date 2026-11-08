@@ -254,6 +254,41 @@ shock. Results are real total returns, daily-rebalanced to today's weights.
 
 These show how today's mix would have fared then, not what will happen next.
 
+## Valuation (`valuation`)
+
+Today's ratios from Yahoo Finance, for the stock part of the portfolio: each
+fund counts for its stock share; bond funds, cash and holdings without data are
+left out and listed. Every metric reports its **coverage**, the share of the
+portfolio it rests on.
+
+**How the portfolio figure is built:**
+- **P/E, forward P/E, P/B, P/S:** the harmonic weighted mean, as fund providers
+  report it: average the yields (E/P, B/P, S/P) by weight, then invert. Two
+  holdings at equal weight with P/Es of 20 and 30 give 24, not 25. A
+  loss-making company keeps its negative earnings yield, so it raises the
+  portfolio P/E instead of being dropped; if the stocks lose money overall
+  the P/E is not meaningful.
+- **Dividend yield, ROE, net margin, net income growth, debt/equity:** the
+  weighted average of the holdings that report them.
+
+**Reading the numbers:**
+- **P/E** (price to the last 12 months' earnings). The S&P 500 has been around
+  20-25 recently. Lower can mean cheaper, slower-growing or riskier; higher
+  usually means growth is expected. Forward P/E uses analysts' estimates.
+- **P/B** (price to book value) matters most for banks and asset-heavy firms;
+  **P/S** (price to sales) is useful when earnings are thin or negative.
+- **ROE** (profit on shareholders' equity) and **net margin** show quality;
+  **net income growth** (last year, and the 3-year CAGR) shows momentum. Growth
+  from a loss is "n/m".
+- **Debt/equity**: 0.5x is half a dollar of debt per dollar of equity. Banks
+  don't report it ("n/a").
+- **Weight vs share of earnings:** a holding whose weight is well above its
+  share of the portfolio's earnings is what you pay most for.
+
+**Data notes:** funds report only P/E, P/B, P/S and yield. For foreign listings
+(e.g. ITUB), Yahoo's sales figure stays in the home currency, so their P/S is
+left out.
+
 ## Factor analysis (Fama-French)
 
 The regression explains the portfolio's excess return (return minus the T-bill
