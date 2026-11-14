@@ -104,8 +104,7 @@ downside was as bumpy as the upside.
 
 **How to read it:** beta above 1 amplifies drawdowns. Low beta with high
 volatility means the risk comes from somewhere other than the broad market,
-such as a sector or single stocks. Rolling beta shows whether the sensitivity
-is stable or drifting.
+such as a sector or single stocks.
 
 ### Max drawdown
 
@@ -233,6 +232,8 @@ worse, say the tail is fatter than a bell curve predicts.
 
 The average loss on the days (or months) beyond the VaR line. It answers
 "when it's bad, how bad?", which VaR doesn't, so it's the better headline.
+Neither is a worst case: the worst day and the past crises show what lies
+beyond them.
 
 ### Past crises (stress scenarios)
 
@@ -251,6 +252,11 @@ shock. Results are real total returns, daily-rebalanced to today's weights.
   returns. Klar never estimates the missing ones. A stand-in the user chooses
   replaces a holding one-for-one with its own real returns, and only in the
   crises the holding missed.
+
+**Telling it:** for each complete crisis, say how the portfolio did against
+the benchmark, how deep it went, how long it took to get back, and what in the
+mix explains the difference. An incomplete crisis has no portfolio result;
+don't infer one.
 
 These show how today's mix would have fared then, not what will happen next.
 
@@ -284,6 +290,13 @@ portfolio it rests on.
   don't report it ("n/a").
 - **Weight vs share of earnings:** a holding whose weight is well above its
   share of the portfolio's earnings is what you pay most for.
+
+**Telling it:** compare each multiple with the benchmark in words ("about
+half the benchmark's P/E"), then say why: which holdings are cheap or
+expensive, whether the quality figures (ROE, margin, growth) justify the
+price, and how leveraged the companies are. Mention coverage when it's under
+100% and what was left out. These are today's ratios, not a forecast; a low
+P/E isn't automatically a bargain.
 
 **Data notes:** funds report only P/E, P/B, P/S and yield. For foreign listings
 (e.g. ITUB), Yahoo's sales figure stays in the home currency, so their P/S is
@@ -348,10 +361,11 @@ would predict.
 - Significant positive alpha is rare and historical. It can reflect skill,
   luck, or a factor the model doesn't include. Berkshire (BRK-B) shows about
   +2.4%.
-- **Fee check:** high R² plus insignificant or negative alpha in an expensive
-  active fund means the user may be paying active fees for factor exposure
-  they could get more cheaply. This is an Auditor finding. Stay factual and
-  don't push a switch.
+- **Index-like funds:** high R² plus insignificant or negative alpha means
+  the fund has behaved like factor exposure that index funds also provide.
+  This is an Auditor finding. Klar returns no fee data: say the fund's fee is
+  worth checking, and don't quote an expense ratio from memory. Stay factual
+  and don't push a switch.
 
 ### Return attribution
 

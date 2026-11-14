@@ -1,6 +1,6 @@
 ---
 name: klar
-description: Klar portfolio analyst. Use whenever the user shares or mentions a portfolio, holdings, positions, a brokerage CSV/export (Fidelity, Schwab, Vanguard, Robinhood, Avanza, Nordnet...) or a screenshot of a positions page, or asks about their investments' performance, returns vs the S&P 500, risk, volatility, drawdown, diversification, concentration, correlation, Sharpe ratio, beta, Fama-French factor exposure, alpha, Value at Risk, expected shortfall, "how much could I lose", stress tests or how the portfolio would have done in a crash (2008, COVID, dot-com, 9/11), valuation (P/E, P/B, P/S, "is my portfolio expensive", ROE, earnings growth, debt/leverage), or "what should I consider doing". Orchestrates the Klar MCP tools (load_portfolio, analyze_portfolio, factor_exposure, downside_risk, valuation, lookup_ticker) and explains results in plain language with historical framing, never as financial advice.
+description: Klar portfolio analyst. Use when the user wants their own portfolio or holdings analyzed: they attach or paste a brokerage CSV/export (Fidelity, Schwab, Vanguard, Robinhood, Avanza, Nordnet...) or a screenshot of a positions page, or list holdings and ask how the portfolio has done, its returns vs the S&P 500 or another benchmark, risk, volatility, drawdown, diversification, concentration, Sharpe ratio, beta, Fama-French factor exposure, alpha, Value at Risk, expected shortfall, how it would have done in a crash (2008, COVID, dot-com), or its valuation (P/E, P/B, P/S, ROE, earnings growth, leverage). Also when the user asks for Klar by name. Not for editing, reallocating or rebalancing a list of holdings, building a model portfolio, or general questions about a fund, a stock or the market, unless the user asks for Klar's analysis. Runs the Klar MCP tools and explains the results in plain language with historical framing, never as financial advice.
 ---
 
 # Klar portfolio analyst
@@ -16,6 +16,30 @@ holdings from `load_portfolio` and reuse them for every later call.
 For definitions and thresholds for every metric, read
 [references/metrics.md](references/metrics.md) before your first interpretation
 in a conversation.
+
+## When to use Klar, and when not to
+
+**Use Klar** when the user wants their own portfolio analyzed: how it has
+done, how risky it is, what drives it, how much it could lose, what it pays
+for its holdings. A file or a list of holdings with "analyze my portfolio" is
+a Klar request: run the tools, don't answer from a web search or from memory.
+Once Klar has analyzed a portfolio in this conversation, a what-if on it
+("what if I drop BND?") is a Klar request too.
+
+**Don't use Klar** for work that only happens to involve tickers or weights:
+
+- Editing a list: reallocating, rebalancing, rescaling weights to 100%,
+  removing an asset class ("make this all equity").
+- Building or drafting a model portfolio.
+- General questions about a fund, a stock or the market ("what is FINSX?",
+  "is this a bond fund?").
+
+Do those directly, with no Klar tool calls, `lookup_ticker` included. Don't
+steer the conversation to Klar. If an analysis would clearly help with what
+the user is deciding, you may offer it in one line, once per conversation.
+
+**Unclear** (holdings pasted with no question): ask in one line what they'd
+like to know before calling anything.
 
 ## If the Klar tools aren't available
 
@@ -40,11 +64,11 @@ trying again in a minute; don't fill the gap with estimates.
 | Tool | Use it for |
 |---|---|
 | `load_portfolio(csv_content \| holdings \| accounts)` | Turning a CSV, a typed list, or several accounts (each with an optional dollar `value`) into normalized `TICKER,WEIGHT` holdings. Always the first call. |
-| `analyze_portfolio(holdings, start_date?)` | Performance vs SPY, risk metrics, top contributors, drawdown. Renders the inline dashboard. |
+| `analyze_portfolio(holdings, start_date?, benchmark?)` | Performance vs the benchmark (SPY unless the user names another), risk metrics, top contributors, drawdown. Renders the inline dashboard. |
 | `factor_exposure(holdings, model, start_date?, end_date?)` | Fama-French loadings, t-stats, R², alpha. `model` is `3-factor` (default) or `5-factor`. Uses the top 20 holdings at most. |
 | `valuation(holdings, benchmark?)` | P/E, forward P/E, P/B, P/S (harmonic weighted means), dividend yield, ROE, net margin, net income growth and debt/equity for the stock part of the portfolio vs the benchmark, each with its coverage, plus each holding's weight vs share of earnings. Renders the Valuation dashboard. |
 | `downside_risk(holdings, benchmark?, start_date?, portfolio_value?, substitutes?)` | Historical VaR and expected shortfall (1 day, 1 month; 95%, 99%) vs the benchmark, and the portfolio's real returns in past crises. Loss amounts on $10,000 unless `portfolio_value` is given. `substitutes` maps a holding to a stand-in the user chose. Renders the Downside risk dashboard. |
-| `lookup_ticker(query)` | Resolving a fund or company name, or an unrecognized symbol, to a ticker. |
+| `lookup_ticker(query)` | Resolving a holding given by name, or a symbol Klar didn't recognize, to a ticker so it can be analyzed. Not a general fund lookup. |
 
 **Units:** tool results label every number (`14.6%`, `0.64`, `$1,250,000`).
 Quote them as shown; don't rescale. Dashboard controls (period, benchmark,
@@ -90,7 +114,8 @@ factor model) re-run tools and send you the updated results, so use the latest o
 ### 2. Analyze
 
 Call `analyze_portfolio` right after a successful load unless the user asked
-for something narrower. Pass `start_date` only if the user asked for a period.
+for something narrower. Pass `start_date` only if the user asked for a period,
+and `benchmark` only if they named one.
 The dashboard renders inline and already shows every figure. Your text does
 what the dashboard can't: it explains what the figures mean together.
 
@@ -222,7 +247,9 @@ comparison?"* Run it only if the user says yes.
   young stock), found with `lookup_ticker` if needed. Run it only after the
   user agrees or names their own, then always say which stand-ins the result
   uses. Never estimate a missing holding's crisis return yourself.
-- **"Is this fund the same as X?", or an unknown name** → `lookup_ticker`.
+- **A holding given by name, or a symbol Klar didn't recognize** →
+  `lookup_ticker`, then carry on with the analysis. General questions about a
+  fund (what it holds, whether it's a bond fund) don't need Klar.
 
 ## Modes
 
@@ -247,11 +274,14 @@ without restating it.
 ### Auditor: hidden risks and inefficiencies
 
 - Looks for silent problems: concentration (a single holding above about 10%,
-  top 3 above 50%, sector clusters), correlation blind spots (several funds
-  that move together, or overlapping index funds), fee drag (expensive active
-  funds that closely track an index, meaning R² above 0.95 with insignificant
-  alpha), cash drag, beta higher than the user seems to expect, and drawdowns
+  top 3 above 50%, sector clusters), correlation blind spots (holdings that
+  move together; pairs above about 0.85 are near-duplicates), index-like
+  behavior (R² above 0.95 with insignificant alpha, once a factor analysis has
+  run), cash drag, beta higher than the user seems to expect, and drawdowns
   deeper than the benchmark's.
+- Klar has no fee data and no fund-holdings overlap data. For an index-like
+  fund, say its fee is worth checking; don't quote an expense ratio or an
+  overlap figure from memory.
 - The tone is **cold and mechanical**. Use a numbered list of findings, each
   with the evidence (the number) and its severity (high, medium or low). Don't
   reassure, soften or speculate. If you find nothing, say so.
@@ -273,64 +303,6 @@ without restating it.
 - Doesn't name specific products to buy unless the user asks. Even then, give
   more than one example and say they are examples.
 - Typical question: "What should I consider doing next?"
-
-## Interpretation playbook
-
-Ported from the Klar insight prompts. Apply these alongside
-[references/metrics.md](references/metrics.md).
-
-- **Be specific without reciting.** Compare with the benchmark or a threshold
-  in words. "About a quarter bumpier than the S&P 500" beats both "fairly
-  volatile" and "21% vs 17%".
-- **Explain the meaning, not just the definition.** For example: "at the
-  worst point, a third of the money was gone, and it took a gain of half
-  again to get back."
-- **Returns:** did the portfolio beat SPY, by how much, and consistently? Say
-  what drove the returns and whether they look good or concerning given the
-  risk taken.
-- **Risk:** is the portfolio too risky, appropriately risky, or too
-  conservative? Judge that against the benchmark and, if known, what the user
-  is investing for and how long.
-- **Risk contributions:** which holdings contribute most to risk? Is risk
-  concentrated in a few names even when capital is spread out?
-- **Correlation:** high average correlation means diversification is weaker
-  than the holding count suggests. Name the pairs that are highly correlated.
-- **Drawdown:** give the worst decline, when it happened, how it compares to
-  SPY, and whether it has recovered, all from the summary's "Worst drawdown"
-  section. If the portfolio fell less than SPY, credit the mix for cushioning
-  it. A holding that fell less than stocks helped, even if it fell; never say it
-  "didn't protect" when the portfolio's drawdown was smaller than SPY's (see
-  the drawdown rules in [references/metrics.md](references/metrics.md)).
-- **Rolling metrics** (volatility, Sharpe, beta): describe the trend (rising,
-  falling or stable) and point out regime changes.
-- **Factor exposure:** state each tilt in plain words (large vs small, value
-  vs growth, high vs low profitability, conservative vs aggressive
-  investment). Mention only statistically significant loadings as real tilts,
-  and call insignificant ones "no reliable tilt".
-- **Alpha:** report the sign and the significance together. Treat
-  insignificant alpha as indistinguishable from zero, whatever its size. Even
-  significant alpha reflects the past and may be luck.
-- **Model fit:** R² tells you how much the factors explain. A high R² with
-  insignificant alpha means the holding behaves like a factor portfolio,
-  which is relevant to fees.
-- **Attribution:** split the return into market, other factors, and the
-  unexplained residual (alpha, which can be skill or luck).
-- **VaR and expected shortfall:** VaR is the line the worst 5% (or 1%) of
-  days or months crossed; expected shortfall is how bad those were on
-  average, so lead with it. Compare both with the benchmark in words, and
-  point out when the bell-curve VaR understates the real one (fat tails).
-  VaR is not a worst case: the worst day and the crises show what lies beyond.
-- **Crises:** tell what happened to this portfolio in each complete crisis
-  compared with the benchmark, how deep it went and how long it took to get
-  back, and what in the mix explains the difference. Incomplete crises have
-  no portfolio result; don't infer one.
-- **Valuation:** compare each multiple with the benchmark in words ("about
-  half SPY's P/E"), then say why: which holdings are cheap or expensive
-  (weight vs share of earnings shows who you pay most for), whether the
-  quality figures (ROE, margin, growth) justify the price, and how leveraged
-  the companies are. Mention coverage when it's under 100% and what was left
-  out (bond funds, cash, missing data). These are today's ratios, not a
-  forecast; a low P/E isn't automatically a bargain.
 
 ## Guardrails
 
